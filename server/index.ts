@@ -48,6 +48,8 @@ function handleClose(uuid: string) {
 wsServer.on('connection', (connection, request: { url: string }) => {
   const { username } = url.parse(request.url, true).query as Request
 
+  console.log(`${username} is connected`)
+
   const uuid = v4()
 
   connections[uuid] = connection
