@@ -31,10 +31,19 @@ function handleMessage(bytes: RawData, uuid: string) {
 
   broadcast()
 
-  console.log(message)
+  console.log(
+    `${users[uuid].username} update their state: ${JSON.stringify(user.state)}`,
+  )
 }
 
-// function handleClose(uuid: string) {}
+function handleClose(uuid: string) {
+  console.log(`${users[uuid].username} is disconnected`)
+
+  delete connections[uuid]
+  delete users[uuid]
+
+  broadcast()
+}
 
 wsServer.on('connection', (connection, request: { url: string }) => {
   const { username } = url.parse(request.url, true).query as Request
@@ -49,7 +58,7 @@ wsServer.on('connection', (connection, request: { url: string }) => {
   }
 
   connection.on('message', (message) => handleMessage(message, uuid))
-  // connection.on('close', () => handleClose(uuid))
+  connection.on('close', () => handleClose(uuid))
 })
 
 server.listen(8000, () => {
