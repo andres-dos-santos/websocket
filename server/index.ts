@@ -12,12 +12,24 @@ const wsServer = new WebSocketServer({ server })
 const connections: Connection = {}
 const users: Users = {}
 
+function broadcast() {
+  Object.keys(connections).forEach((uuid) => {
+    const connection = connections[uuid]
+
+    const message = JSON.stringify(users)
+
+    connection.send(message)
+  })
+}
+
 function handleMessage(bytes: RawData, uuid: string) {
   const message = JSON.parse(bytes.toString())
 
   const user = users[uuid]
 
   user.state = message
+
+  broadcast()
 
   console.log(message)
 }
