@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul id="messages">
+    <li>Text</li>
+  </ul>
+
+  <form action="">
+    <input type="text" id="input">
+    <button type="submit">Send</button>
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io()
+
+    const messages = document.getElementById('messages')
+    const input = document.getElementById('input')
+
+    document.addEventListener('submit', (event) => {
+      event.preventDefault()
+
+      if (input.value) {
+        socket.emit('listen', input.value)
+      }
+    })
+
+    messages.appendChild(li)
+
+    socket.on('listen', (message) => {
+      console.log(message)
+
+      document.createElement('li')
+
+      li.textContent = message
+    })
+  </script>
+</body>
+</html>
