@@ -1,0 +1,13 @@
+{
+  "dependencies": { "socket.io": "^4.7.5" },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/bun": "^1.1.0"
+  },
+  "name": "server",
+  "module": "src/server.ts",
+  "type": "module",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
